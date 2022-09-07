@@ -18,16 +18,28 @@ import br.com.main.dto.TodoRequestDTO;
 import br.com.main.dto.TodoResponseDTO;
 import br.com.main.model.Todo;
 import br.com.main.service.TodoService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/api/todos")
 @CrossOrigin("http://localhost:4200")
+@Api("API para criação de tarefas")
 public class TodoController {
 
 	@Autowired
 	private TodoService todoService;
 	
+
+    @GetMapping
+    @ApiOperation("Endpoint para consulta de todas as tarefas")
+    public ResponseEntity<?> getAll(){
+        List<Todo> todoAll = todoService.all();
+        return ResponseEntity.ok().body(todoAll);
+    }
+    
 	@PostMapping
+	@ApiOperation("Endpoint para criação de tarefa")
 	public ResponseEntity<TodoResponseDTO> save(@RequestBody TodoRequestDTO todoDto) {
 	    Todo todo = todoService.create(todoDto.dataTransferObject());
 		//return ResponseEntity.ok().body(todo);
@@ -36,11 +48,6 @@ public class TodoController {
 	    return ResponseEntity.created(uri).body(TodoResponseDTO.dataTransferObject(todo));
 	}
 	
-	@GetMapping
-	public ResponseEntity<?> getAll(){
-	    List<Todo> todoAll = todoService.all();
-		return ResponseEntity.ok().body(todoAll);
-	}
 	
 	/*@GetMapping("{id}")
 	public Todo getById(@PathVariable Long id) {
