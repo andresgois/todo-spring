@@ -12,11 +12,13 @@ import javax.persistence.PrePersist;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Todo {
 
 	@Id
@@ -41,4 +43,12 @@ public class Todo {
 	public void beforeSave() {
 		setCreatedDate(LocalDateTime.now());
 	}
+
+    public Todo(String description, Boolean done) {
+        super();
+        this.description = description;
+        this.done = done;
+    }
+	
+	
 }
