@@ -1,21 +1,31 @@
 package br.com.main.mapper;
 
-import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
-
-import br.com.main.dto.StandardErrorDTO;
+import java.util.List;
+import java.util.stream.Collectors;
+import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Component;
 import br.com.main.dto.TodoRequestDTO;
 import br.com.main.dto.TodoResponseDTO;
 import br.com.main.model.Todo;
+import lombok.RequiredArgsConstructor;
 
-@Mapper(componentModel = "spring")
-public interface TodoMapper {
+@Component
+@RequiredArgsConstructor
+public class TodoMapper {
     
-    public static final TodoMapper INSTANCE = Mappers.getMapper(TodoMapper.class);
+    private final ModelMapper mapper;
     
-    //@Mapping(source = "status", target = "status")
-    public Todo toTodoDto(TodoRequestDTO todoRequestDTO);
+    public Todo toTodoRequest(TodoRequestDTO request) {
+        return mapper.map(request, Todo.class);
+    }
     
-    public Todo toTodoDto(TodoResponseDTO todoResponseDTO);
+    public TodoResponseDTO toTodoResponse(Todo response) {
+        return mapper.map(response, TodoResponseDTO.class);
+    }
+
+    public List<TodoResponseDTO> toTodoResponseList(List<Todo> todos) {
+        return todos.stream()
+                .map(this::toTodoResponse)
+                .collect(Collectors.toList());
+    }
 }
