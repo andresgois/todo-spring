@@ -4,10 +4,11 @@ import java.net.URI;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,26 +35,38 @@ public class TodoController {
 
     @GetMapping
     @ApiOperation("Endpoint para consulta de todas as tarefas")
-    public ResponseEntity<?> getAll(){
-        List<Todo> todoAll = todoService.all();
+    public ResponseEntity<List<TodoResponseDTO>> getAll(){
+        List<TodoResponseDTO> todoAll = todoService.all();
         return ResponseEntity.ok().body(todoAll);
     }
     
 	@PostMapping
 	@ApiOperation("Endpoint para criação de tarefa")
 	public ResponseEntity<TodoResponseDTO> save(@RequestBody TodoRequestDTO todoDto) {
-	    Todo todo = todoService.create(todoDto.dataTransferObject());
+	    TodoResponseDTO todo = todoService.create(todoDto);
 		//return ResponseEntity.ok().body(todo);
 	    //return new ResponseEntity<>(TodoResponseDTO.dataTransferObject(todo), HttpStatus.CREATED);
 	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(todo.getId()).toUri();
-	    return ResponseEntity.created(uri).body(TodoResponseDTO.dataTransferObject(todo));
+	    return ResponseEntity.created(uri).body(todo);
 	}
 	
 	@GetMapping("{id}")
     public ResponseEntity<TodoResponseDTO> getById(@PathVariable Long id) throws Exception {
-        Todo todo = todoService.findTodo(id);
-        return ResponseEntity.ok().body(TodoResponseDTO.dataTransferObject(todo));
+	    TodoResponseDTO todo = todoService.findTodo(id);
+        return ResponseEntity.ok().body(todo);
     }
+	
+	@DeleteMapping("{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+	    todoService.deleteTodo(id);
+        return ResponseEntity.noContent().build();
+    }
+	
+	@PatchMapping("{id}/done")
+    public ResponseEntity<TodoResponseDTO> markAsDone(@PathVariable Long id) {
+        TodoResponseDTO todo = todoService.todoDone(id);
+        return ResponseEntity.ok().body(todo);
+	}
 	
 	/*@GetMapping("{id}")
 	public Todo getById(@PathVariable Long id) {
