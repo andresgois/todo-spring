@@ -2,13 +2,16 @@ package br.com.main.dto;
 
 import java.time.LocalDateTime;
 
-import br.com.main.model.Todo;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class TodoResponseDTO {
  
     private Long id;
@@ -16,11 +19,9 @@ public class TodoResponseDTO {
     private Boolean done;
     private LocalDateTime createdDate;
     
-    public static TodoResponseDTO dataTransferObject(Todo todo) {
-        return new TodoResponseDTO(
-                todo.getId(),
-                todo.getDescription(),
-                todo.getDone(),
-                todo.getCreatedDate());
-    }
+    /*
+     * public static TodoResponseDTO dataTransferObject(Todo todo) { return new
+     * TodoResponseDTO( todo.getId(), todo.getDescription(), todo.getDone(),
+     * todo.getCreatedDate()); }
+     */
 }
