@@ -15,10 +15,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@Entity
 public class Todo {
 
 	@Id
@@ -49,6 +49,4 @@ public class Todo {
         this.description = description;
         this.done = done;
     }
-	
-	
 }
