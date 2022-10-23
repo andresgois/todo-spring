@@ -1,0 +1,1 @@
+INSERT INTO todo (created_date, description, done, done_date) VALUES ('2022-10-25T11:47:54.7684644','Pagar carro', false, null);
