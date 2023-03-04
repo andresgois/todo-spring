@@ -3,6 +3,7 @@ package br.com.main.mapper;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import br.com.main.dto.TodoRequestDTO;
 import br.com.main.dto.TodoResponseDTO;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class TodoMapper {
     
+    @Autowired
     private final ModelMapper mapper;
     
     public Todo toTodoRequest(TodoRequestDTO request) {

@@ -39,6 +39,7 @@ public class Todo {
 	
 	@PrePersist
 	public void beforeSave() {
+		//this.createdDate = LocalDateTime.now();
 		setCreatedDate(LocalDateTime.now());
 	}
 

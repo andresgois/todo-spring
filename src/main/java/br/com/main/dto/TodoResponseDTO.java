@@ -2,7 +2,6 @@ package br.com.main.dto;
 
 import java.time.LocalDateTime;
 
-import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +17,12 @@ public class TodoResponseDTO {
     private String description;
     private Boolean done;
     private LocalDateTime createdDate;
+    
+    public Long getId() {
+        return this.id;
+    }
+    
+    
     
     /*
      * public static TodoResponseDTO dataTransferObject(Todo todo) { return new

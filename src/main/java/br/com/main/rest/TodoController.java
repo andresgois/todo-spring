@@ -46,7 +46,8 @@ public class TodoController {
 	    TodoResponseDTO todo = todoService.create(todoDto);
 		//return ResponseEntity.ok().body(todo);
 	    //return new ResponseEntity<>(TodoResponseDTO.dataTransferObject(todo), HttpStatus.CREATED);
-	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(todo.getId()).toUri();
+	    Long id = todo.getId();
+	    URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(id).toUri();
 	    return ResponseEntity.created(uri).body(todo);
 	}
 	
